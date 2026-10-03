@@ -244,7 +244,9 @@ def load_voice_dir(vdir: str | Path, name: str | None = None,
             f"model uses {expect_queries}. It belongs to different weights.")
 
     meta_path = vdir / "meta.json"
-    meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
+    # UTF-8 required: Windows default locale encoding garbles Vietnamese meta.
+    meta = (json.loads(meta_path.read_text(encoding="utf-8"))
+            if meta_path.exists() else {})
     preview = vdir / "preview.wav"
     return Voice(name=name, emb=emb, meta=meta,
                  preview_path=str(preview) if preview.exists() else None)
@@ -255,5 +257,5 @@ def load_index(voices_root: str | Path) -> dict:
     root = Path(voices_root)
     index_path = root / "index.json"
     if index_path.exists():
-        return json.loads(index_path.read_text())
+        return json.loads(index_path.read_text(encoding="utf-8"))
     return {"voices": [{"name": n} for n in list_voices(root)]}

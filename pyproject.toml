@@ -35,6 +35,7 @@ dependencies = [
 # before the server starts. Both are imported directly, so both are named here
 # rather than relied on as transitive Gradio dependencies.
 webui = ["gradio>=4.44.0", "fastapi>=0.110", "uvicorn>=0.27", "requests>=2.31"]
+api = ["fastapi>=0.110", "uvicorn>=0.27"]
 # Metrics only — the scorers are torch models. Inference stays torch-free.
 # Benchmarking. The metrics themselves live in the ZeroBench-TTS dataset repo
 # (fetched at runtime by evaluation/zerobench.py); these are the libraries its
